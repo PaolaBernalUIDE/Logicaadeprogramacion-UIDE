@@ -1,3 +1,4 @@
+
 # JUEGO DE AHORCADO
 
 import random
@@ -46,3 +47,41 @@ def jugar_ahorcado():
     intentos_fallidos = 0
     letras_usadas = []
 
+    # Bucle principal del juego
+    while True:
+        # Mostrar el estado del juego
+        mostrar_estado(palabra_oculta, intentos_fallidos, letras_usadas)
+
+        # Pedir letra al usuario
+        letra = input("Adivina una letra: ").lower()
+
+        # Validar entrada: solo una letra
+        if len(letra) != 1 or not letra.isalpha():
+            print("Por favor ingresa solo una letra válida.")
+            continue
+
+        # Validar letra repetida
+        if letra in letras_usadas:
+            print("Ya has adivinado esa letra. Intenta con otra.")
+            continue
+
+        letras_usadas.append(letra)
+
+        # Verificar si la letra está en la palabra secreta
+        if letra in palabra_secreta:
+            for i in range(len(palabra_secreta)):
+                if palabra_secreta[i] == letra:
+                    palabra_oculta[i] = letra
+        else:
+            intentos_fallidos += 1
+
+        # Verificar si ganó o perdió
+        if "_" not in palabra_oculta:
+            print(f"¡Felicidades! 🌟 Has adivinado la palabra: {palabra_secreta}")
+            break
+        elif intentos_fallidos >= 6:
+            print(f"¡Has perdido! La palabra era: {palabra_secreta}")
+            break
+
+        # Ejecutar el juego
+jugar_ahorcado()
